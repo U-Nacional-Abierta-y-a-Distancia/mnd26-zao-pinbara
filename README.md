@@ -2,7 +2,7 @@
   <img src="assets/encabezado.png" alt="UNAD, Universidad Nacional Abierta y a Distancia, y Segundas Olimpiadas Unadistas 2026" width="560">
 </p>
 
-# Nombre del proyecto
+# Yaku No Avisa Dos Veces
 
 > Maratón de Innovación en Narrativas Digitales · Segundas Olimpiadas Unadistas 2026 · Fase zonal
 
