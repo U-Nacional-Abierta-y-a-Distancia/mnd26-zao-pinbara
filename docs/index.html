@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yaku no avisa dos veces</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ================= ESCENARIO (fijo detrás) ================= -->
+  <div class="escenario">
+    <div class="capa activa" data-capa="portada"></div>
+
+    <div class="capa" data-capa="escena-1"></div>
+    <div class="capa" data-capa="escena-5"></div>
+    
+    <!-- Capas reutilizables: cualquier escena puede usarlas -->
+    <div class="capa" data-capa="yaku">
+      <div class="yaku-estados" id="yaku" data-estado="1">
+        <span class="onda-transformacion"></span>
+        <img class="estado activo" data-estado="1" src="yaku-1.png" alt="">
+        <img class="estado" data-estado="2" src="yaku-2.png" alt="">
+        <img class="estado" data-estado="3" src="yaku-3.png" alt="">
+        <img class="estado" data-estado="4" src="yaku-4.png" alt="">
+      </div>
+    </div>
+    <div class="capa" data-capa="mapa">
+    <svg class="mapa" id="mapa" viewBox="170 120 730 920" role="group" aria-label="Mapa de la Zona Amazonía Orinoquía">
+      <g class="depto" id="vaupes" data-nombre="Vaupés" data-region="amazonia" tabindex="0" role="button" aria-label="Vaupés"><path d="M601.09,711.27c-.16-5.2-2.54-8.67-7.91-8.84l-1.43-7.7c-2.18-3.6-6.28-4.77-9.93-6.33l-2-5.84c-.98-2.86-2.95-4.82-3.11-8.03-.33-7.03-9.29-6.28-11.52-10.03-1.23-2.07-.72-5.02-1.09-7.51-4.43-2.05-8.28-.11-11.93,2.67-3.41,2.59-9.26-4.43-14.94-3.8l-2.07,3.63c-5.47,1.88-10.61.46-16.09.18l-25.22-1.27c3.51-8.55,2-10.65-4.05-16.2,2.4-1.68,4.3-3.04,5.75-5.1,4.8-6.79-4.41-8.5-8.39-15.92.39-3.2-1.46-5.44-4.84-5.38-1.94-3.36-5.19-4.23-8.76-3.06-4.75,2.07-9.85.99-13.11-2.99l-7.19-8.8c9.69-5.08.59-11.74,4.7-18.5,3.08-5.07,10.36-1.13,13.84-4.3,1.41-1.28.86-4.51,1.79-6.01,2.9-4.71,9.09-4.22,13.82-5.28,3.49-.78,1.99-6.66.18-8.57-3.52-3.71-3.9-7.68-1.68-11.82l6.46-12.07c3.72-12-2.21-26.24,8.81-26.12s11.11-8.28,19.48-12.31l40.83,1.1c-3.98,3.61-7.78,6.81-7.31,12.65,4.2-.26,7.59,1.43,11.2,2.61,7.76,2.54,15.88,2.25,23.91,3.33,9.73,1.3,17.29,12.27,32.19,8.26,2.04-.55,7.31-1.82,7.22,1.89l-1.37,54.65,8.58.69c4.98,2.14,8.86,2.06,14.01.63h10.96c6.5,0,12.98,2.71,15.23,8.93,1.6,4.41-1.79,10.82,3.66,16.88,1.35,1.5,1.26,4.87-.16,5.53-3.47,1.61-4.62-3.03-6.72-3.65-4.89-1.45-11.57-2.01-16.38-.58-3.93,1.17-7.18,4.51-11.99,3.26l-14.92,4.15c-6.79,1.89-13.2,3.55-20.41,3.11l-2.19,66.49,35.42,27.96c2.09,1.65.59,5.99-.09,7.86-1.88,3.88-3.61,7.26-3.43,11.53.2,4.51,2.7,8.64,7.35,9.71.36,5.64,3.32,9.73,7.43,14.04l-13.13-.14c-4.14-.04-6.35,1.58-9.84,3.22-3.87,1.83-9.36-.86-12.49-3.39-3.45-2.79-3.08-7.2-4.27-10.86-1.44-4.41-9.17-4.81-9.64-8.59-.5-4.09,9.24-7.93,1.96-16.86-1.97-2.42-5.09-5.38-5.2-9.1Z"/></g>
+      <g class="depto" id="vichada" data-nombre="Vichada" data-region="orinoquia" tabindex="0" role="button" aria-label="Vichada"><path d="M612.61,383.39c-7.36,4.42-12.27-3.05-17.26-.63-7.41,3.58-2.1,11.19-13.69,13.48-2.89.57-5.38,3.61-8.92,3.49-2.7-.09-4.89,2.67-5.01,5.11-.35,7.57-7.31,10.84-8.43,15.96-1.21,5.49-2.38,11.19-7.07,14.86-4.31,3.37-9.89,5.12-15.47,5.38l-.56-19.56,1.63-161.74c10.33-9.76,5.97-22.45,24.84-25.1,5.74-1.57,8.15-8.99,11.37-13.24,4.81-6.35,10.49-11.36,16.48-16.32,7.53-6.24,16.08-.54,21.67-2.63,11.87-4.43,21.85-24.62,28-36.77l22.54.44c5.76.11,10.77-2.25,12.6-7.95,2.97-.28,4.71,1.48,6.91,2.95,4.16,2.78,10.12,1.73,13.24-2.04,2.01-2.44,2.78-5.85,5.33-7.78s7.26.09,9.72,1.83c9.64,6.84,25.43,8.94,35.42,5.16,10.15-3.84,18.49.38,23.69-2.02,12.71-5.87,20.4.09,27.85-5.79,11.16-8.8,30.84-4.27,38.17,4.91,6.3,7.9,3.91,18.31-2.91,25.31l-10.64,9.42-1.02,26.12-11.74,4.75c-5.2,2.1-7.21,7.8-4.27,12.68,3.05,5.06,2.91,10.65,1.14,16.39l-7.46,24.16c-4.2,13.61,6.3,24.54,6.32,28.94l.1,22.82c0,.79,1.22,1.47,1.52,1.9.47.66-6.86,15.87-13.25,14.86-1.25-.2-2.44-1.42-3.26-2.95-2.78-5.2-9.46-7.57-14.31-3.9-.99.75-1.58,1.8-2.55,1.97-4.12.71-5.69-7.53-15.09-2.54l-8.81,4.68c-5.22,1.19-9.68,3.45-13.52,7.15-5.81-.1-10.72,3.19-13.14,8.2-1.6,2.72-4.51,4.65-7.73,4.17-2.72-.41-4.74,1.17-7.01,1.49-15.55,2.23-15.39,10.51-23.48,11.55-5.91.76-11.91,1.21-17.74-.22l-9.17-3.7c-4.33-1.74-7.13.36-9.79,3.67-1.38,1.71-5.67.31-6.93-1.03-2.24-2.39-3.72-.79-5.73-.35-4.88,1.07-9.38,1.44-13.23,5.15-2.79,2.69-5.92,5.25-9.33,7.3Z"/></g>
+      <g class="depto" id="meta" data-nombre="Meta" data-region="orinoquia" tabindex="0" role="button" aria-label="Meta"><path d="M415.34,443.85c-2.17.64-2.03-.47-1.56-2.24.02-.09.78,1.31-.85.48-5.08-1.11-8.35,4.54-13.91,4.59-7-2.87-15.74-2.4-20.51,4.46-1.62,2.34-1.21,7.57-4.37,9.42-4.34,2.53-10.55,2.98-15.6,2.61-6.32-.46-10.69,1.21-16.11,4.16-2.92,1.59-6.46-2.52-8.73-4.8l-2.11,53.22c-8.66-3.56-15.09-1.8-24.5-7.85l-29.94-19.25c-4.36-2.8-8.48-6.64-13.39-8.21-11.38-3.66-21.74-10.62-24.6-22.27-1.38-5.62-20.76-14.82-26.33-22.5-4.28-8.33,1.42-20.47,8.67-25.22,3.37-2.21,4.34-5,7.38-6.67l7.64-4.19c3.33-2.65,5.81-5.6,6.22-10.16,1.23-13.79,5.74-27.81,18.23-34.08,6.93-3.48,11.15-8.85,13.66-16.2l5.77-16.87c.89-2.62,2.1-4.43,4.16-5.25,5.92-2.37,9.85,3.76,13.28,4.03,5.75.45,11.1-1.53,16-3.73l1.1,1.37c-2.96,5.33-5.47,10.63-7.53,15.9,6.62.45,13.01.49,19.17.13l-9.73-22.8c-.11-.42.28-1.39.61-1.33l1.39.25c1.46-.59,2.22-3.28.96-4.79-2.65-3.19-4.61-8.59-1.75-12.41,2.21-2.96,8.8-2.19,10.51.98,2.37,4.41,3.76,8.56,6.94,12.47,2.68-2.08,5.49-1.7,8.18-1.65l.55,1.94-4.79,4.86c3.86,3.77,7.25,7.94,10.17,12.51,3-4.69,6.73-8.52,11.19-11.5-1.33-1.41-1.48-2.57-.45-3.49,2.32.78,4.93,1.11,7.45-.43,1.58-.97,2.84-3.76,2.98-6.38l1.27-24.9c4.39,4.32,9.89,8.22,12.37,14.09,2.8,6.63,6.59,14.36,14.7,14.68l18.91.75c13.4.53,20.66-17.84,31.74-9.3,4.37,3.37,10,3.15,13.6-.82l12.18-13.41c3.29-3.62,8.82-3.77,13.41-4.76,11.77-2.54,17.18-11.59,24.16-11.21s13.32-1.81,19.48-5.77l-1.61,166.81.43,11.71c-18.26,2.16-38.51-9.08-51.99-9.52l-27.18-.9c-1.29,3.5-3.42,7.86-7.84,7.8l-5.68-4c-4.37-1.38-10.05-.84-13.78,1.86l-7.88,5.69c-.97.7-1.91,1.01-1.74,2.12Z"/><path class="parche" d="M313.85,317.32c1.06-1.76,2.33-3.43,3.01-5.41.32-.11,1.6,0,1.89.65l10.53,24.31-24.92-.78,9.5-18.77Z"/></g>
+      <g class="depto" id="casanare" data-nombre="Casanare" data-region="orinoquia" tabindex="0" role="button" aria-label="Casanare"><path d="M399.02,304.11c-5.08-.21-8.66-5.68-10-9.89-1.26-3.96-3.11-6.61-5.9-9.42-3.52-3.54-6.47-7.31-11.13-10.06,3.08-3.05,4.63-5.97,5.92-9.82,3.04-1.09,6.2-2.6,7.1-5.78l1.21-16.67c.16-2.25,4.97-14.85,9.4-16.22,1.48-.46,3.94-.59,4.5,1.76.42,1.73-.05,6.41,2.68,6.52l17.22.7c7.71.32,10.2-7.89,13.16-15.72l9.27-.58c12.75-.8,14.12-10.58,16.19-20.13.79-3.64-.67-7.18-4.61-7.59l-7.35-.77c-1.48-.15-2.74-1.03-3.38-1.95-2.33-3.33,4.17-9.11-1.48-20.7-1.63-3.34-.75-7.98-.71-11.7,2.9,1.14,3.68,5.34,5.94,6.63,5.65,3.22,10.24-1.62,13.7-5.68,2.98-3.49,9.66-3.6,13.92-3.25,5.52.46,9.57-.58,14.63-1.59,5.37-1.07,11.69,1.6,16.89-.32,7.43-2.75,14.33-6.33,22.56-6.76,6.7-.35,14.02,5.19,26.25,5.39l31.03.52,7.98-3.09c5.41-.33,12.12-1.23,17.16.88,5.57,2.32,8.89,7.94,13.54,11.29l11.04,5.52c-6.45,11.32-16.69,32.12-27.19,34.45l-12.74-.58c-7.4,1.13-12.8,5.99-17.47,11.27-3.15,3.56-6.83,5.8-9.28,10.21-2.07,3.73-4.8,9.74-9.24,11.19-9.13,1.23-16.49,6.06-19.24,15.36-1.63,5.52-5.14,9.54-10.47,12.01-4.23,1.96-8.18,5.56-13.14,5.74s-9.87.73-13.97,4.19c-5.35,4.52-11.69,7.15-18.6,8.15-13.52,1.96-16.69,14.92-26.09,20.21-1.92,1.08-5.29-.69-6.76-1.85-12.31-9.71-20.91,9.41-32.95,8.91l-19.6-.81Z"/></g>
+      <g class="depto" id="guaviare" data-nombre="Guaviare" data-region="amazonia" tabindex="0" role="button" aria-label="Guaviare"><path d="M479.6,435.09c12.09.5,30.09,10.85,49.31,9.55,2.68-.18,3.41.69,4.71,2.6,4.89,7.16,10.34,14.23,12.7,22.82,1.32,4.81,2.38,9.3,6.38,12.76,6,5.18,10.15-4.46,12.95-2.11,2.91,2.43,4.61,6.74,3.66,10.47-.48,1.9-2.89,3.06-4.76,3l-42.87-1.26c-7.44-.22-10.11,8.1-16.41,11.7-1.64.94-4.41.35-6.14.71-13.11,2.76-6.16,16.52-10.14,28.3l-6.52,11.95c-4.53,11.82,3.86,12.68,3.23,18.5-5.57.36-10.93,1.64-15.08,5.41l-1.54,6.6c-3.61.64-7.62-.05-10.99,1.61-5.17,2.55-5.94,9.19-3.87,14.21.78,1.89.15,3.7-1.2,4.65-.93.65-3.24,1.33-4.19-.18-2.62-4.16-15.43-9.89-21.95-11.4l-18.53-4.3c-6.88-1.6-12.1-5.87-15.18-12.19-3.67-7.52-12.6,1.71-20.39-9.65 L372.97,558.96l-10.82-16.18c-8.06-9.72-17.34-17.85-27.14-25.83l1.61-46.7c3.06,1.7,6.33,2.03,8.82.2,9.18-6.76,21.34-.24,31-6.63,3.44-2.28,3.1-7.27,5.14-10.31,2.59-3.86,8.94-5.4,12.97-3.89,8.95,3.36,10.69-1.61,17.37-3.93,2.57,4.37-4.1,8.32-8.61,7.6,4.94,4.26,5.45,7.15,3.91,13.58,4.1-2.99,7.81-2.82,11.77.11-.76-5.46.81-9.85,4.7-13.17-3.94.1-10.98-3.04-7.57-7.26,2.57-.55,4.95-1.76,7.18-4.09,3.58-3.72,10.36-6.7,15.24-3.75,3.09,1.86,5.44,4.74,9.59,3.01,3.12-1.3,5.43-4.11,6.85-7.54l24.77,1.01Z"/><path class="parche" d="M415.51,444.93l.62,1.63c.41,1.08.83,3.35,2.13,4.2,2.46,1.51,5.98,1.28,8.71,1.96l-6.27,6.91.27,10.3c-2.61-1.09-5.12-3.63-7.94-3.74-2.5-.09-4.66,2.63-7.74,3.2l1.28-10.05c-1.96-2.73-4.69-4.2-6.18-7.95,3.15.18,5.36.88,8.2-.67,1.34-.61,2.44-3.04,3.33-5.01l1.17-2.54c.3-.54.57-1.08,1.44-1.42.12,1.49.61,2.24.97,3.18Z"/></g>
+      <g class="depto" id="guainia" data-nombre="Guainía" data-region="amazonia" tabindex="0" role="button" aria-label="Guainía"><path d="M649.44,521.87l-19.21-1.15c-4.11-.25-6.75-1.51-10.93-.27-2.89.86-7.8.92-10.61-.42l-11.55-5.51c-4.01-1.91-7.88-2.99-12.42-3.01-9.42-.05-18.05-2.1-27.1-5.52,1.87-6.8,14.43-6.63,16.34-14.98.96-4.19-1.96-8.9-4.25-11.87-2.45-3.18-6.11-3.3-9.03-.69-.94.84-2.84,2.79-4.25,2.18-4.3-1.87-5.13-6.48-6.3-10.48-2.8-9.56-8.05-17.64-13.94-25.69,14.54-2.31,22-8.01,24.15-22.04.65-4.24,8.5-9.13,8.27-14.94-.09-2.16,1.42-5.19,3.96-4.85,3.47.47,5.45-2.52,7.91-3.07,12.87-2.85,9.22-10.52,13.72-13.47,1.21-.79,3.34-.69,4.84.24,8.04,4.98,15.47-.8,22.32-7,3.68-3.34,7.41-4.25,11.93-4.86,2.51-.34,3.62-1.21,6,.59,3.98,3.02,8.73,1,11.32-2.77,2.56-3.72,9.79,4.36,21.06,4.25,5.56-.05,11.33.02,16.45-2.22,4.22-1.85,6.39-8.71,18.91-9.91,1.78-.17,3.67-1.97,5.85-1.72,4.64.54,8.49-2.1,10.83-5.79,2.5-4.2,6.58-7.01,11.64-6.49,3.88-4.05,8.59-6.29,13.99-7.44l9.75-5.38c5.44-3,6.85,3.52,11.75,3.64,2.05.05,3.73-1.22,5.52-2.65,3.01-2.43,7.56-.72,9.19,2.64,1.16,2.39,2.73,4.19,4.67,4.66,7.26,1.77,12.21-6.25,16.97-13.87l2.65,17.46c.72,4.71,3.6,8.4,8.09,9.56l9.04,2.33c1.9,4.25,6.47,7.59,7.57,11.96,1.02,4.03.45,7.97,2.73,11.78,4.37,7.32-4.36,18.83-13.66,23.91-11.71,6.39-16.41,17.05-25.37,22.56-2.69,1.66-4.54,4.76-2.34,7.82,2.14,2.97,6.04.03,8.18-.34l10.09,3.25,2.62,10.88c7.74.32,14.01,3.61,18.75,9.45l10.07,10.08c-.13,3.67-.86,6.96-1.92,10.31l6.93,9.58,6.06,27.06,5.15,19.03c.77,2.84,1.78,5.33,3.36,7.79,5.51,8.62,7.17,19.35,2.32,28.76-2.26,4.4-10.91,6.05-13.99,2.49.03-4.84,1.33-9.92-.06-14.86-4.09-14.56.61-23.25-9.55-32.99-4.74-4.55-7.69-10.5-6.92-17.37,1.03-9.28,2.79-19.61-4.49-19.84-4.55-.15-9.52.87-12.86,4.06l-14.24,13.66c-3.71,3.56-6.54,7.45-8.91,12.01-2.1,4.04-6.69,5.08-10.74,3-8.22-4.23-11.63-13.75-18.62-18.2-1.9-1.21-5.59-2.01-7.01.41-3.69,6.33,1.85,12.11,2.59,17.94l-93.47-3.06c-6.76-5.06-17.99-7.34-19.83-.62Z"/></g>
+      <g class="depto" id="amazonas" data-nombre="Amazonas" data-region="amazonia" tabindex="0" role="button" aria-label="Amazonas"><path d="M613.94,988.91c-2.58.21-4.77-1.44-6.59-4.96l-3.6-5.8c-3.48,4.21-7.18,8.12-11.11,11.74,3.68,3.94,6.99,8.17,9.92,12.69,2.45-3.65,5.26-6.97,8.44-9.95l2.1.43-4.98,23.96c-2.11-1.38-2.39-3.6-3.46-5.08l-15.46-21.28c-2.33-3.21-4.62-5.45-5.3-9.84-.28-1.81-1.7-3.91-2.83-4.75-1.54-1.15-4.21-1.05-6.06-.57-8.88,2.27-11.67,10.77-17.09,6.09-1.11-.96-3.73-3.47-2.48-5.44l53.5-84.73c-3.65-.58-5.95-1.61-7.81-4.13l-4.33-5.88c-6.97,2.48-5.61-8.21-14.06-8.62-3.28-.16-5.47-1.44-7.82-3.61l-3.84-1.66c-1.68-2.02-3.12-3.28-5.35-3.39-5.24-.26-6.3,4.62-9.01,3.72l-.35-7.61c-.22-4.8-4.83-7.7-9.4-7.36-.42-2.1-2.91-2.45-3.83-3.3-2.79-2.58-5.11-3.96-8.91-3.68-14.37,1.07-22.03,11.41-35.13,11.72-3.41.08-4.85-5.18-11.09-4.05-1.3-3.13-2.01-6.43-4.45-8.9-3.96-4.01-8.57,3.74-14.15-3.02-2.72-3.3-7.86-2.08-10.47.76l-7.32,7.97c-3.78,4.11-14.8,1.03-19.77,8.04-2.32,3.27-10.25-1.85-15.15,4.32-.56.7-1.51,1.05-2.15,1.05-2.1-.02-1.68-3.95-3.4-4.53-5.18-1.73-7.72,2.06-14.79-4.38-2.93-2.66-7.74-.02-9.81,3.04l-13.94-.08c-5.71-.03-3.32-8.11-7.93-8.66-2.88-.34-4.75,1.72-7.43,3.74-1.09-3.74-3.61-8.31-2.86-12.29,2.23-3.52,5.46-6.93,3.26-11.68l-2.95-2.32.04-16.45c0-2.76-.84-5.54-2.32-7.81-3.64-1.9-7.34-.43-9.87,2.96-6.09,1-13.01-1.6-16.68-6.77l4.6-11.48c1.62-4.03-11.35-19.62-17.13-25.49-4.1-2.35-9.72-1.48-14.59-2.12-.74-5.69-4.28-10.32-9.74-12.4-4.46-1.7-3.98-8.23-8.72-7.31-1.41.28-2.64,1.74-3.53,3.93-6.17-.88-15.69-9.35-15.2-12.34.36-2.18,6.47-4.39,3.47-10.66l-6.96-1.74c-.09-2.95-1.55-8.5.3-11.26l18.64-19.09c2.58-2.64,4.99-6.4,6.97-9.08,4.75-.39,8.66,4.15,10.85,7.69,3.5,5.68,9.44,6.39,15.25,3.49,8.8-4.41,20.31-10.57,24.47-.89,1.27,2.95,3.65,6.15,6.88,7.38,3.67,1.4,8.1.56,11.6-1.08,11.92-5.6,17.26,3.62,25.59,2.7,4.68-.52,7.36,1.69,10.92,3.71,7.07,4.01,16.67-2.39,29.95-2.26,7.54.07,13.43-5.28,14.57-12.63l20.58-23.73c4.83-5.57,11.1-9.96,17.72-13.23l13.41-6.62c2.38-1.18,7.69,3.21,7.14,5.58l-2.4,10.44,29.93,1.51c8.07.41,16.67,2.58,19.02-4.23l7.08,3.63c3.44,1.76,7.48,1.74,10.13-1.54.93-1.14,4.85-2.01,4.94-.55.34,5.26,1.91,8.74,7.24,10.1,1.59.41,5.04,2.11,5.01,4.17-.06,4.35,2.44,7.1,3.6,10.61,1.3,3.95,2.27,6.5,7.08,7.74,1.97.51,5.62,2.8,5.35,5.25-.46,4.17.89,7.33,5.12,8,4.8.76,2.25,6.04,4.8,10.19l6.07,9.88c1.71,2.79-5.26,5.92-4.36,11.97.94,6.33,8.42,4.85,9.75,9.28,1.24,4.13,1.9,8.81,5.47,12.02,3.85,3.46,10.5,5.59,15.41,3.66,3.1-1.22,5.22-3.26,8.81-3.08l13.9.72c0,4.53-.84,8.83.9,12.46,1.95,4.08,3.61,7.8,2.13,12.55-.75.74-3.06,1.25-3.76,2.6l-34.94,174.17-5.26,27.68Z"/></g>
+      <text class="mapa-nombre" id="mapaNombre" x="0" y="0" text-anchor="middle"></text>
+    </svg>
+    </div>
+
+    <div class="capa" data-capa="actividad"><canvas class="relampagos" id="relampagos"></canvas></div>
+    <div class="capa" data-capa="final"></div>
+  </div>
+
+  <!-- Botón fijo para silenciar / activar el sonido -->
+  <button class="sonido-toggle" type="button" id="sonidoToggle" aria-label="Activar sonido">🔇</button>
+
+  <!-- ================= RELATO (sube con el scroll) ================= -->
+  <main class="relato">
+
+    <!-- ===== PORTADA ===== -->
+    <section class="paso portada" data-capa="portada" data-audio="naturaleza">
+      <span class="deco enredadera arriba-der" data-vel="-0.25"><img src="Planta2.png" alt=""></span>
+      <span class="deco arbusto izq" data-vel="0.15"><img src="planta1.png" alt=""></span>
+      <svg class="logo" viewBox="0 0 15.64 8.6" role="img" aria-label="Yaku no avisa dos veces">
+        <defs>
+    <style>
+      .logo-cls-1 {
+        fill: url(#logo-Degradado_sin_nombre_21-3);
+      }
+
+      .logo-cls-2 {
+        fill: url(#logo-Degradado_sin_nombre_11);
+      }
+
+      .logo-cls-3 {
+        fill: url(#logo-Degradado_sin_nombre_21-2);
+      }
+
+      .logo-cls-4 {
+        fill: url(#logo-Plantas_decorativas_3);
+      }
+
+      .logo-cls-5 {
+        fill: url(#logo-Degradado_sin_nombre_17);
+      }
+
+      .logo-cls-6 {
+        fill: url(#logo-Degradado_sin_nombre_21);
+      }
+
+      .logo-cls-7 {
+        fill: url(#logo-Degradado_sin_nombre_21-4);
+      }
+
+      .logo-cls-8 {
+        fill: url(#logo-Degradado_sin_nombre_14);
+      }
+
+      .logo-cls-9 {
+        fill: url(#logo-Degradado_sin_nombre_42);
+      }
+    </style>
+    <linearGradient id="logo-Degradado_sin_nombre_42" data-name="Degradado sin nombre 42" x1="13.85" y1="4.32" x2="15" y2="4.32" gradientTransform="translate(.43 -1.26) rotate(5.12)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7a947f"/>
+      <stop offset=".49" stop-color="#3b7557"/>
+      <stop offset="1" stop-color="#005340"/>
+    </linearGradient>
+    <linearGradient id="logo-Plantas_decorativas_3" data-name="Plantas decorativas 3" x1="0" y1="1.01" x2="1.79" y2="1.01" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#99c169"/>
+      <stop offset=".5" stop-color="#679632"/>
+      <stop offset="1" stop-color="#507d26"/>
+    </linearGradient>
+    <linearGradient id="logo-Degradado_sin_nombre_17" data-name="Degradado sin nombre 17" x1="14.76" y1="3.87" x2="15.64" y2="3.87" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#99c169"/>
+      <stop offset=".5" stop-color="#679632"/>
+      <stop offset="1" stop-color="#507d26"/>
+    </linearGradient>
+    <linearGradient id="logo-Degradado_sin_nombre_14" data-name="Degradado sin nombre 14" x1="14.08" y1="3.41" x2="14.41" y2="3.41" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#99c169"/>
+      <stop offset=".5" stop-color="#679632"/>
+      <stop offset="1" stop-color="#507d26"/>
+    </linearGradient>
+    <linearGradient id="logo-Degradado_sin_nombre_11" data-name="Degradado sin nombre 11" x1="13.38" y1="3.83" x2="13.88" y2="3.83" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#99c169"/>
+      <stop offset=".5" stop-color="#679632"/>
+      <stop offset="1" stop-color="#507d26"/>
+    </linearGradient>
+    <linearGradient id="logo-Degradado_sin_nombre_21" data-name="Degradado sin nombre 21" x1=".2" y1="4.39" x2="5.84" y2="4.39" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset=".54" stop-color="#7ba8d2"/>
+      <stop offset=".54" stop-color="#6da2ce"/>
+      <stop offset=".54" stop-color="#4e96c7"/>
+      <stop offset=".54" stop-color="#3b8ec2"/>
+      <stop offset=".54" stop-color="#358cc1"/>
+      <stop offset=".79" stop-color="#367ea0"/>
+      <stop offset="1" stop-color="#005d81"/>
+    </linearGradient>
+    <linearGradient id="logo-Degradado_sin_nombre_21-2" data-name="Degradado sin nombre 21" x1="4.73" y1="4.18" x2="8.44" y2="4.18" xlink:href="#logo-Degradado_sin_nombre_21"/>
+    <linearGradient id="logo-Degradado_sin_nombre_21-3" data-name="Degradado sin nombre 21" x1="8.62" y1="3.66" x2="11.85" y2="3.66" xlink:href="#logo-Degradado_sin_nombre_21"/>
+    <linearGradient id="logo-Degradado_sin_nombre_21-4" data-name="Degradado sin nombre 21" x1="12.01" y1="4.28" x2="14.87" y2="4.28" xlink:href="#logo-Degradado_sin_nombre_21"/>
+  </defs>
+        <g class="logo-planta">
+    <path class="logo-cls-9" d="M13.81,4.99l.05-.08.03-.12v-.11s.05-.16.05-.16c.01-.02.03-.07.04-.12,0-.04,0-.07,0-.1-.02-.11-.07-.23-.1-.28l.19.22.04-.51.02-.06.04.04.03.37.11-.09.18-.11.09-.13.04-.05.04-.03.09-.05.17-.06h.08s0,.02,0,.02l-.05.07-.11.13h.04s.05,0,.05,0h.02s.02.03.02.03l-.05.05-.12.02-.13.06-.12.07-.13.09-.14.13-.05.11-.07.18h.25s.52-.03.52-.03h.02s.03.03.03.03v.04s-.07.57-.07.57l-.03.09-.91-.07-.13-.15Z"/>
+  </g>
+  <g class="logo-planta">
+    <path class="logo-cls-4" d="M.8,0c.07.03.12.07.16.14.18.29.26.79.3,1.15,0,.06.07.1.11.15l.29.31.13.28c-.07-.03-.14-.07-.2-.12-.08-.05-.15-.12-.21-.19-.01-.01-.03-.03-.04-.02,0-.02,0-.03-.02-.04l-.18-.25c-.07-.1-.17-.16-.29-.18-.19-.04-.36-.11-.51-.23C.17.84.05.65.02.42v-.02s-.01-.01-.02,0c0-.03,0-.04,0-.06.03.01.01-.04.04-.05.01,0,.03,0,.05,0,.23.06.43.24.59.39h.01c-.06-.16-.09-.33-.07-.5C.64.09.68.03.75,0c.02,0,.03,0,.05,0ZM.69.67h0s0,0,0,0Z"/>
+    <path class="logo-cls-5" d="M15.64,3.78v.09s-.05.07-.1.1c-.25.14-.55.07-.74-.14-.01-.01-.03-.02-.04-.02,0,0,0-.02,0-.02,0-.02.04-.01.05-.03.03,0,.07-.02.11-.04.07-.02.15,0,.22.02.26.09.38-.08.49.05Z"/>
+    <path class="logo-cls-8" d="M14.13,3.72s-.03-.03-.04-.03c.01-.03-.06-.19.05-.34l.17-.25c.05-.07.22.3-.03.54l-.09.07s0,.02-.02.02c0,0-.02,0-.03,0Z"/>
+    <path class="logo-cls-2" d="M13.88,4.04c-.11.02-.23,0-.33-.06-.1-.07-.17-.17-.17-.29,0-.02,0-.04.02-.05s.04-.01.05,0l.19.08c.12.07.22.17.23.33Z"/>
+  </g>
+  <g class="logo-titulo">
+    <path class="logo-cls-6" d="M1.33,1.69c-.07.02-.15.05-.25.09-.12.05-.22.1-.42.21-.27.14-.05.04-.38.26-.02.01-.08.05-.08.11,0,.02,0,.04.02.07.02.02.04.03.04.03.48.18.86.56,1.3.82.33.2.8.64,1.38,1.76l.18-.29-.03.13-.4,1.02-.06.19-.05.24-.03.18c-.07.49-.11.68-.13.75,0,.01-.02.06-.02.13,0,.02,0,.05.02.13.04.19.08.21.09.21.01,0,.03.01.07,0l.37-.38.76-.5.27-.22.14-1.77.68-1.35,1.04-1.6-.02-.13-.51-.72h-.12l-1.2,1.47-.27.29-.22.31-.08.26-.12.17-.29-.36-.55-1.05-.79-.38.1.27-.45-.33Z"/>
+    <path class="logo-cls-3" d="M4.91,6.12s-.06.07-.1.06c-.05-.01-.07-.13-.08-.17-.04-.28.08-1.25.12-1.6l.7-1.12.64-.65.57-.47s.03,0,.05,0c.07.02.11.09.12.11.25.48.63.87.91,1.33.09.15.23.37.42.63l.18,1.25s0,.04-.02.06c-.05.04-.19-.09-.48-.26-.06-.04-.11-.06-.14-.08l-.37-.8v-.04s-.37-.53-.39-.57c-.03-.04-.36-.55-.39-.59-.02-.02-.04-.05-.06-.07l-.51.83s.05-.01.09-.02c.23-.05.38-.09.52-.11.1-.02.23-.03.41-.04l.38.55-1.54.27-.07.05-.07.1-.24.84-.63.54Z"/>
+    <path class="logo-cls-1" d="M8.62,2.28l.61-.61s.02,0,.03,0c.04,0,.06.05.07.06l.2,1.56,1.06-1.2.16-.03.42-.02h.24s.41.05.41.05c.02,0,.04.02.04.04.01.03-.03.07-.04.09-.09.1-1.36,1.27-1.43,1.33l1.12.84.27.92.04.21s.02.1-.01.12c-.03.02-.08,0-.1-.02-.11-.06-.32-.16-.6-.3l-1.49-1.24.12,1.16-.06.07-.75-.09-.05-.06-.14-1.06-.09-1.04-.02-.75"/>
+    <path class="logo-cls-7" d="M12.32,2.43l-.22.9-.06.71c-.03.16-.06.43,0,.74.04.18.15.74.67,1.11.12.08.49.34,1,.29.07,0,.59-.07.92-.49.12-.16.18-.31.22-.43.14-.4-.92-.53-1.01-.39-.13.19-.4.19-.57.12-.24-.1-.3-.43-.36-.77-.04-.23-.04-.4-.04-.46,0-.26.05-.72.31-1.29l-.02-.05-.05-.05h-.7l-.1.06Z"/>
+  </g>
+        <g class="logo-sub">
+          <text x="5.24" y="7.10"><tspan fill="#337D9F">NO</tspan> <tspan fill="#98B8DB">AVISA</tspan></text>
+          <text x="5.24" y="8.19"><tspan fill="#FFFFFF">DOS</tspan> <tspan fill="#337D9F">VECES</tspan></text>
+        </g>
+      </svg>
+      <button class="boton boton-sonido" type="button" id="activarSonido">🔊 Entrar con sonido</button>
+      <span class="baja">Baja ↓</span>
+    </section>
+
+    <!--
+      CÓMO ARMAR CADA ESCENA
+      - Fondo propio: data-capa="escena-N" (pongan su imagen dentro de esa capa, arriba).
+      - Usar a Yaku:  data-capa="yaku" data-yaku="1" (versiones 1, 2, 3 o 4).
+      - Usar el mapa: data-capa="mapa" data-resaltar="vichada" (o "meta,guaviare", "orinoquia", "amazonia").
+      - Mapa con alerta: data-capa="mapa" data-alerta="meta" (ese departamento parpadea en alerta y los demás se apagan).
+      - Una escena puede tener varios pasos seguidos: copien el <section> completo.
+      - SONIDO DE AMBIENTE: data-audio="naturaleza" (el nombre sale de AMBIENTES en script.js).
+        Si un paso no tiene data-audio, el ambiente se apaga suavemente.
+      - NATURALEZA: cada <span class="deco ..."> es una planta o piedra decorativa.
+          tipo: arbusto | enredadera
+          lugar: izq | der | arriba-der
+          data-vel: velocidad del parallax (0 = quieta, positivo = más lenta que el scroll, negativo = más rápida)
+        Para moverla de escena, corten y peguen la línea dentro de otro <section>.
+    -->
+
+    <!-- ===== ESCENA 1 ===== -->
+    <section class="paso escena-inicio" data-capa="escena-1" data-audio="naturaleza">
+      <span class="deco arbusto izq" data-vel="0.2"><img src="planta1.png" alt=""></span>
+      <span class="deco enredadera der" data-vel="-0.15"><img src="Planta2.png" alt=""></span>
+      <h2 class="texto-grande">Toda leyenda comienza con algo que pocos saben escuchar</h2>
+    </section>
+
+    <!-- ===== ESCENA 2 ===== -->
+    <section class="paso" data-capa="yaku" data-yaku="1" data-audio="naturaleza">
+      <span class="deco arbusto der" data-vel="0.18"><img src="planta1.png" alt=""></span>
+      <div class="tarjeta letrero">
+        <p>Se cuenta que en la Amazonía y la Orinoquía, Yaku era espíritu hecho de agua cristalina y brisa helada que les daba vida a los ríos y a los morichales.</p>
+        <p>Este tenía aspecto de aquel considerado Tótem de la zona.</p>
+      </div>
+    </section>
+
+    <!-- ===== ESCENA 3 ===== -->
+    <section class="paso" data-capa="yaku" data-yaku="1" data-audio="naturaleza">
+      <span class="deco enredadera izq" data-vel="-0.2"><img src="Planta2.png" alt=""></span>
+      <div class="tarjeta letrero"><p>Cada 7 años, un calor muy lejano llegaba desde el océano. Dicen que Yaku lo recibía bajo la sombra del bosque. Ahí se enfriaba y resguardaba.</p>
+      </div>
+    </section>
+
+    <!-- Aquí Yaku se transforma (versión 1 → versión 2) -->
+    <section class="paso" data-capa="yaku" data-yaku="2">
+      <div class="tarjeta letrero">
+        <p class="destacado">Pero los humanos empezaron a quemar la selva y a tumbar los árboles.</p>
+      </div>
+    </section>
+
+    <!-- ===== ESCENA 4 ===== -->
+    <section class="paso" data-capa="yaku" data-yaku="2">
+      <span class="deco arbusto der" data-vel="0.18"><img src="planta1.png" alt=""></span>
+      <div class="tarjeta letrero">
+        <p class="destacado">Él se manifestó a través del viento. Nadie lo escuchó.</p>
+      </div>
+    </section>
+
+    <!-- Aquí Yaku se transforma (versión 2 → versión 3) -->
+    <section class="paso" data-capa="yaku" data-yaku="3">
+      <div class="tarjeta letrero">
+        <p>La siguiente vez que llegó el calor, ya no había sombra donde estar.</p>
+        <p>Se le metió a Yaku en el cuerpo y lo hizo hervir de dolor: su piel se volvió dura como una piedra y de su pecho brotó un corazón de lava.</p>
+      </div>
+    </section>
+
+    <!-- ===== ESCENA 5: EL TITÁN (Yaku se transforma: versión 3 → versión 4) ===== -->
+    <section class="paso" data-capa="yaku" data-yaku="4" data-audio="titan">
+      <span class="deco arbusto der" data-vel="0.18"><img src="planta1.png" alt=""></span>
+      <div class="tarjeta letrero titan">
+        <span class="titan-pre">Así nació</span>
+        <h2 class="titulo-seccion">El Titán de Fuego, al que llaman El Niño</h2>
+      </div>
+    </section>
+    <section class="paso" data-capa="yaku" data-yaku="4" data-audio="titan">
+      <div class="tarjeta letrero">
+        <p>Hoy, cada pisada del titán retumba en el territorio.</p>
+        <p class="destacado">No lo hace por maldad. Está expulsando el calor que lo obligaron a guardar.</p>
+      </div>
+    </section>
+
+    <!-- ===== ESCENA 5 ===== -->
+    <section class="paso centrada" data-capa="escena-5" data-audio="naturaleza">
+      <span class="deco enredadera izq" data-vel="-0.2"><img src="Planta2.png" alt=""></span>
+      <div class="tarjeta letrero">
+        <span class="etiqueta">Eje 3 · Preparación y respuesta comunitaria</span>
+        <h2 class="titulo-seccion">Expediente Yaku</h2>
+        <p class="subtitulo">El Niño no afecta a todos de la misma manera</p>
+        <p>Yaku tiene muchas versiones. Cada uno tiene versiones distintas de YAKU.</p>
+      </div>
+    </section>
+
+    <!-- ===== ESCENA 6 ===== -->
+
+    <!-- ===== ESCENA 6: MAPA Y MISIÓN ===== -->
+    <section class="paso escena-mapa" data-capa="mapa" data-alerta="meta" data-audio="naturaleza">
+      <span class="deco arbusto izq" data-vel="0.18"><img src="planta1.png" alt=""></span>
+      <div class="mision">
+        <div class="tarjeta letrero">
+          <h2 class="titulo-seccion">Cuando llegue el momento…<br>¿Tu territorio sabrá qué hacer?</h2>
+          <span class="etiqueta">Tu misión</span>
+          <p>Explora el mapa, investiga las señales y descubre cómo prepararte antes de que una emergencia ocurra.</p>
+          <p class="pista" id="pistaMeta">Toca el Meta en el mapa</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ESCENA 7: CASO META (se desbloquea al tocar el Meta en el mapa) ===== -->
+    <section class="paso escena-mapa" data-capa="mapa" data-alerta="meta" data-audio="naturaleza" id="casoMeta" hidden>
+      <span class="deco enredadera izq" data-vel="-0.2"><img src="Planta2.png" alt=""></span>
+      <div class="mision">
+        <div class="tarjeta letrero caso">
+          <span class="etiqueta etiqueta-alerta">Alerta META</span>
+          <h3 class="caso-titulo">El primer aviso</h3>
+          <p>En esta área, las lluvias intensas, las inundaciones, los vendavales y los movimientos en masa pueden poner en riesgo a las comunidades.</p>
+          <p class="destacado">Yaku ha encontrado tres señales. ¿Podrás interpretarlas a tiempo?</p>
+          <div class="objetivo">
+            <span class="etiqueta">Objetivo de la misión</span>
+            <p>Reconoce los riesgos y descubre cómo actuar a tiempo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ACTIVIDAD: 3 PREGUNTAS (las preguntas se escriben en script.js) ===== -->
+    <section class="paso actividad" data-capa="actividad" data-audio="naturaleza" id="actividad">
+      <div class="quiz" id="quiz" aria-live="polite"></div>
+    </section>
+
+    <!-- ===== CIERRE (se desbloquea al terminar la actividad) ===== -->
+    <section class="paso final" data-capa="final" data-audio="naturaleza" id="final" hidden>
+      <span class="deco arbusto izq" data-vel="0.15"><img src="planta1.png" alt=""></span>
+      <span class="deco arbusto der" data-vel="0.15"><img src="planta1.png" alt=""></span>
+      <div class="tarjeta final-tarjeta">
+        <img class="final-yaku" src="yaku-1.png" alt="">
+        <h2>La aventura continúa en EnlAZAO.</h2>
+        <p>Explora otros territorios. Descubre sus riesgos. Conecta las señales antes de que sea demasiado tarde.</p>
+        <!-- Cambien el # por el link de EnlAZAO -->
+        <a class="boton boton-grande" href="#" id="seguirAventura">Seguir la aventura</a>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

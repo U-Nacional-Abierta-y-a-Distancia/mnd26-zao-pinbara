@@ -1,0 +1,606 @@
+/* ===== PALETA DEL EQUIPO ===== */
+:root {
+  --sea-glass: #00B593;      /* acento principal: botones, detalles */
+  --lagoon-green: #0A7F5E;   /* acento secundario */
+  --pacific-blue: #0675A0;   /* enlaces, barras */
+  --tropical-aqua: #14406D;  /* superficies: tarjetas */
+  --deep-ocean: #05242B;     /* fondo de toda la página */
+  --texto: #EEF6F4;
+  --tarjeta: rgba(20, 64, 109, 0.82);   /* Tropical Aqua semitransparente */
+
+  /* ===== TIPOGRAFÍA DEL EQUIPO ===== */
+  --fuente: "Open Sans", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }   /* lo oculto se queda oculto aunque tenga otro display */
+
+body {
+  margin: 0;
+  background: var(--deep-ocean);
+  color: var(--texto);
+  font-family: var(--fuente);
+  line-height: 1.6;
+}
+
+/* ---------- ESCENARIO (fijo) ---------- */
+.escenario {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse at 70% 40%, var(--tropical-aqua), var(--deep-ocean) 70%);
+}
+
+.capa {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;   /* las capas no bloquean los toques... */
+}
+.capa.activa { opacity: 1; }
+
+/* Escenas sin imagen todavía: muestran un aviso. Bórrenlo cuando pongan su fondo */
+.pendiente {
+  font-size: 1rem;
+  color: rgba(238, 246, 244, 0.35);
+  border: 2px dashed rgba(238, 246, 244, 0.2);
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+}
+/* Imagen de fondo de una escena: ocupa toda la pantalla */
+.fondo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- YAKU: 4 versiones superpuestas ---------- */
+.yaku-estados {
+  position: relative;
+  height: 80vh;
+  aspect-ratio: 1122 / 1402;      /* proporción de las ilustraciones */
+  max-width: 90%;
+  --brillo: rgba(0, 181, 147, 0.45);   /* color del resplandor, cambia por versión */
+  filter: drop-shadow(0 0 32px var(--brillo));
+  transition: filter 1.2s ease;
+}
+.yaku-estados[data-estado="2"] { --brillo: rgba(255, 120, 110, 0.55); }
+.yaku-estados[data-estado="3"] { --brillo: rgba(255, 150, 40, 0.65); }
+.yaku-estados[data-estado="4"] { --brillo: rgba(255, 70, 30, 0.75); }
+/* versión 4 (titán): cada pocos segundos da una "pisada" que retumba */
+.yaku-estados[data-estado="4"]:not(.transformando) { animation: pisada 2.6s ease-in-out infinite; }
+@keyframes pisada {
+  0%, 70%, 100% { transform: none; filter: drop-shadow(0 0 32px var(--brillo)); }
+  76% { transform: translateY(-10px) scale(1.02); }
+  82% { transform: translateY(4px) scale(0.99); filter: drop-shadow(0 0 60px rgba(255, 90, 30, 0.95)); }
+  86% { transform: translateX(-5px); }
+  90% { transform: translateX(4px); }
+}
+.titan { text-align: left; }
+.titan-pre { display: block; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #C2410C; margin-bottom: 0.3rem; }
+.titan .titulo-seccion { font-size: clamp(1.9rem, 4.4vw, 3rem); color: #7C1D0B; }
+
+.estado {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 1.2s ease;   /* fundido entre versiones */
+}
+.estado.activo { opacity: 1; }
+
+/* TRANSFORMACIÓN: destello, onda de energía y temblor al cambiar de versión */
+.onda-transformacion {
+  position: absolute; left: 50%; top: 55%;
+  width: 60%; aspect-ratio: 1; translate: -50% -50%;
+  border-radius: 50%;
+  border: 4px solid rgba(120, 230, 255, 0.9);
+  box-shadow: 0 0 40px rgba(120, 230, 255, 0.8), inset 0 0 40px rgba(120, 230, 255, 0.6);
+  opacity: 0; pointer-events: none; z-index: 2;
+}
+.yaku-estados.transformando .onda-transformacion { animation: onda-yaku 1.1s ease-out; }
+.yaku-estados[data-estado="3"] .onda-transformacion, .yaku-estados[data-estado="4"] .onda-transformacion { border-color: rgba(255, 170, 60, 0.95); box-shadow: 0 0 40px rgba(255, 140, 40, 0.85), inset 0 0 40px rgba(255, 140, 40, 0.6); }
+.yaku-estados.transformando .estado.activo { animation: destello-yaku 1.2s ease-out; }
+.yaku-estados.transformando { animation: temblor 0.5s linear 2; }
+@keyframes onda-yaku {
+  0%   { opacity: 1; scale: 0.2; }
+  100% { opacity: 0; scale: 2.2; }
+}
+@keyframes destello-yaku {
+  0%   { filter: brightness(3) saturate(0) blur(6px); }
+  40%  { filter: brightness(1.8) blur(1px); }
+  100% { filter: none; }
+}
+@keyframes temblor {
+  0%, 100% { translate: 0 0; }
+  20% { translate: -6px 2px; }  40% { translate: 5px -3px; }
+  60% { translate: -4px -2px; } 80% { translate: 4px 3px; }
+}
+
+/* pequeño sacudón cuando cambia de versión */
+.yaku-estados.cambio { animation: sacudon 0.6s ease; }
+@keyframes sacudon {
+  0%, 100% { transform: scale(1); }
+  30%      { transform: scale(1.04); }
+  60%      { transform: scale(0.99); }
+}
+
+/* ---------- MAPA ---------- */
+.capa[data-capa="mapa"].activa { pointer-events: auto; }   /* ...salvo el mapa cuando está visible */
+.mapa {
+  width: min(90vw, 560px);
+  max-height: 86vh;
+  height: auto;
+}
+.depto path {
+  stroke: var(--deep-ocean);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  transition: fill 0.6s ease, opacity 0.6s ease;
+}
+.depto path.parche { stroke: none; }   /* piezas sueltas del trazo: sin borde */
+.depto[data-region="orinoquia"] path { fill: #F6F6F6; }   /* colores del mapa original */
+.depto[data-region="amazonia"]  path { fill: #A4D9E6; }
+.depto { cursor: pointer; transition: opacity 0.6s ease; outline: none; }
+.depto.atenuado { opacity: 0.25; }
+.depto.resaltado path {
+  fill: var(--sea-glass);
+  filter: drop-shadow(0 0 12px rgba(0, 181, 147, 0.7));
+}
+.depto:hover path,
+.depto:focus-visible path { fill: var(--sea-glass); }
+/* ALERTA: un departamento encendido en alerta y los demás apagados */
+:root { --alerta: #F07A3A; }
+.depto.apagado { opacity: 1; }
+.depto.apagado path { fill: #3E5560; }
+.depto.apagado { cursor: default; }
+.depto.alerta path {
+  fill: var(--alerta);
+  animation: alerta-latido 1.6s ease-in-out infinite;
+}
+@keyframes alerta-latido {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(240, 122, 58, 0.5)); }
+  50%      { filter: drop-shadow(0 0 22px rgba(240, 122, 58, 0.95)); }
+}
+.marcador-alerta { pointer-events: none; }
+.marcador-alerta .onda {
+  fill: none;
+  stroke: var(--alerta);
+  stroke-width: 4;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: alerta-onda 1.6s ease-out infinite;
+}
+@keyframes alerta-onda {
+  from { transform: scale(0.6); opacity: 0.9; }
+  to   { transform: scale(2.6); opacity: 0; }
+}
+.marcador-alerta .punto { fill: var(--alerta); stroke: var(--texto); stroke-width: 4; }
+.marcador-alerta text { fill: var(--texto); font-family: var(--fuente); font-weight: 700; font-size: 30px; }
+.caso-titulo { margin: 0 0 0.5rem; font-size: 1.5rem; line-height: 1.2; }
+
+/* títulos dentro del letrero */
+.titulo-seccion {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.08;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.escena-mapa .titulo-seccion { text-transform: none; font-size: clamp(1.4rem, 3vw, 2rem); }
+.subtitulo { font-size: 1.25rem; font-weight: 700 !important; color: var(--lagoon-green); margin-bottom: 0.5rem !important; }
+.tarjeta.letrero p + p { margin-top: 0.6rem; }
+
+/* ---------- ESCENA CENTRADA (escena 5) ---------- */
+.paso.centrada { justify-content: center; padding-left: 16px !important; }
+.paso.centrada .tarjeta { text-align: center; align-items: center; }
+
+/* ---------- ESCENAS 6 y 7: mapa, misión y caso ---------- */
+.escena-mapa { min-height: 110vh; }
+.mision { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 1.6rem; width: min(100%, 38rem); }
+.mision .tarjeta.letrero { width: 100%; }
+.pista {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin-top: 0.9rem !important;
+  font-weight: 700 !important;
+  color: var(--alerta);
+}
+.pista::before { content: "●"; animation: alerta-latido-texto 1.2s ease-in-out infinite; }
+@keyframes alerta-latido-texto { 50% { opacity: 0.2; } }
+.caso { transform: rotate(0.8deg); animation: caso-entra 0.6s ease both; }
+@keyframes caso-entra { from { opacity: 0; transform: translateY(20px) rotate(0.8deg); } }
+.etiqueta-alerta { color: var(--alerta) !important; }
+.destacado { font-weight: 800 !important; }
+.tarjeta.letrero .destacado:only-child { font-size: 1.45rem; line-height: 1.35; }
+.objetivo { margin-top: 0.9rem; padding-top: 0.8rem; border-top: 2px dashed rgba(5, 36, 43, 0.25); }
+
+.mapa-nombre {
+  font-family: var(--fuente);
+  font-weight: 700;
+  font-size: 34px;
+  fill: var(--texto);
+  stroke: var(--deep-ocean);
+  stroke-width: 6px;
+  paint-order: stroke;
+  pointer-events: none;
+}
+
+/* ---------- RELATO (se desplaza) ---------- */
+.relato {
+  overflow-x: clip;        /* las plantas que salen del borde no crean scroll lateral */
+  position: relative;
+  z-index: 1;
+  pointer-events: none;   /* deja pasar los toques al mapa... */
+  padding-inline: 16px;
+}
+
+.paso {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.tarjeta {
+  pointer-events: auto;   /* ...pero las tarjetas sí se pueden tocar */
+  background: var(--tarjeta);
+  border-left: 3px solid var(--sea-glass);
+  padding: 1.5rem;
+  max-width: 30rem;
+  border-radius: 4px;
+  font-size: 1.1rem;
+}
+
+.etiqueta {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sea-glass);
+  margin-bottom: 0.4rem;
+}
+.tarjeta p { margin: 0; }
+.tarjeta h2 { margin: 0 0 0.6rem; font-size: 1.8rem; line-height: 1.15; }
+
+/* ---------- NATURALEZA DECORATIVA (parallax) ---------- */
+.paso { position: relative; }
+.tarjeta, .quiz { position: relative; z-index: 2; }   /* el texto siempre encima de las plantas */
+.portada .logo, .portada .baja { position: relative; z-index: 2; }
+.deco {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  transform: translate3d(0, var(--py, 0px), 0) scaleX(var(--giro, 1));
+  will-change: transform;
+}
+.deco img { display: block; width: 100%; height: auto; }
+/* bordes rectos de las imágenes: se desvanecen para que no se vea el corte */
+.deco.arbusto img    { -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent); mask-image: linear-gradient(to bottom, #000 70%, transparent); }
+.deco.enredadera img { -webkit-mask-image: linear-gradient(to bottom, transparent, #000 15%, #000 80%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 15%, #000 80%, transparent); }
+
+/* tamaños */
+.deco.arbusto    { width: clamp(150px, 20vw, 300px); }
+.deco.enredadera { width: clamp(170px, 24vw, 360px); }
+
+/* lugares */
+.deco.izq          { left: calc(-16px - 2vw);  top: 10%; }
+.deco.der          { right: calc(-16px - 2vw); top: 10%; --giro: -1; }   /* espejo para mirar hacia adentro */
+.deco.arriba-der   { right: calc(-16px - 3vw); top: -4%; }
+.deco.enredadera.izq { --giro: -1; }
+.deco.enredadera.der { --giro: 1; }
+
+/* vaivén suave con el viento */
+.deco.arbusto img, .deco.enredadera img {
+  transform-origin: 0% 100%;
+  animation: viento 6s ease-in-out infinite alternate;
+}
+.deco.enredadera img { transform-origin: 70% 0%; animation-duration: 7.5s; }
+@keyframes viento {
+  from { transform: rotate(-1.5deg); }
+  to   { transform: rotate(1.5deg); }
+}
+
+/* en celular: más pequeñas y un poco transparentes para no tapar el texto */
+@media (max-width: 899px) {
+  .deco { opacity: 0.85; }
+  .deco.arbusto    { width: 34vw; }
+  .deco.enredadera { width: 38vw; }
+  .deco.izq, .deco.der { top: 0; }
+}
+
+/* ---------- ESCENA 1: TEXTO GRANDE ---------- */
+.escena-inicio {
+  justify-content: center;
+  text-align: center;
+  padding-left: 0 !important;
+}
+.texto-grande {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  max-width: 16ch;                      /* pocas palabras por línea: se ve como cartel */
+  font-size: clamp(2.2rem, 8.5vw, 6rem);   /* tamaño del texto grande: súbanlo o bájenlo aquí */
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  color: var(--texto);
+  text-shadow: 0 6px 30px rgba(5, 36, 43, 0.8);
+}
+/* las palabras aparecen una por una cuando la escena llega al centro */
+.texto-grande .palabra {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.4em);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition-delay: calc(var(--i) * 90ms);
+}
+.texto-grande.visible .palabra { opacity: 1; transform: none; }
+
+/* ---------- LETRERO (fondo de papel para la narración) ----------
+   Se activa poniendo class="tarjeta letrero" en la tarjeta del paso */
+.tarjeta.letrero {
+  background: url("letrero.png") center / 100% 100% no-repeat;
+  border: none;
+  border-radius: 0;
+  color: var(--deep-ocean);
+  width: min(100%, 38rem);          /* tamaño del letrero: súbanlo o bájenlo aquí */
+  max-width: none;
+  min-height: 13rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 3.4rem 3.3rem;      /* margen para que el texto no toque los bordes del pincel */
+  font-size: 1.2rem;
+  transform: rotate(-1.2deg);
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.35));
+}
+.tarjeta.letrero .etiqueta { color: var(--lagoon-green); }
+.tarjeta.letrero p { font-weight: 600; }
+
+/* ---------- BOTONES ---------- */
+.boton {
+  appearance: none;
+  font: inherit;
+  font-weight: 700;
+  background: var(--sea-glass);
+  color: var(--deep-ocean);
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1.3rem;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.boton:hover { background: #00cfa8; }
+.boton:focus-visible, .opcion:focus-visible { outline: 3px solid var(--texto); outline-offset: 3px; }
+
+/* ---------- ACTIVIDAD (3 preguntas) ---------- */
+.actividad, .final { justify-content: center; }
+.quiz {
+  pointer-events: auto;
+  width: min(100%, 36rem);
+  background: var(--tropical-aqua);
+  border-radius: 8px;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+.quiz-progreso { display: flex; gap: 6px; }
+.quiz-progreso i { flex: 1; height: 5px; border-radius: 3px; background: rgba(238, 246, 244, 0.2); }
+.quiz-progreso i.hecha { background: var(--sea-glass); }
+.quiz-progreso i.actual { background: var(--pacific-blue); }
+.quiz h3 { margin: 0; font-size: 1.35rem; line-height: 1.3; }
+.quiz-cabeza { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.quiz-cabeza .etiqueta { font-size: 0.9rem; margin: 0; }
+.reloj {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--alerta);
+  background: rgba(240, 122, 58, 0.12);
+  border: 1px solid rgba(240, 122, 58, 0.5);
+  border-radius: 99px;
+  padding: 0.15rem 0.8rem;
+}
+.situacion { margin: 0; font-size: 1.05rem; line-height: 1.55; }
+.opcion { display: grid; grid-template-columns: 1.8rem minmax(0, 1fr); gap: 0.6rem; align-items: start; }
+.opcion .letra { font-weight: 700; color: var(--sea-glass); }
+.opcion[aria-checked="true"] { border-color: var(--sea-glass); background: rgba(0, 181, 147, 0.12); }
+.boton:disabled { opacity: 0.4; cursor: not-allowed; }
+.opciones { display: flex; flex-direction: column; gap: 0.6rem; }
+.opcion {
+  appearance: none;
+  font: inherit;
+  text-align: left;
+  background: var(--deep-ocean);
+  color: var(--texto);
+  border: 2px solid transparent;
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.opcion:hover:not(:disabled) { border-color: var(--pacific-blue); }
+.opcion:disabled { cursor: default; opacity: 0.5; }
+.opcion.bien { opacity: 1; border-color: var(--sea-glass); background: rgba(0, 181, 147, 0.18); }
+.opcion.mal  { opacity: 1; border-color: #e0664a; background: rgba(224, 102, 74, 0.15); }
+.retro {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: center;
+  background: rgba(0, 181, 147, 0.12);
+  border: 1px solid rgba(0, 181, 147, 0.5);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  animation: aparecer-retro 0.4s ease both;
+}
+.retro.mal { background: rgba(224, 102, 74, 0.12); border-color: rgba(224, 102, 74, 0.6); }
+.retro b { color: var(--sea-glass); }
+.retro.mal b { color: #f08a6e; }
+.retro-yaku { width: 56px; height: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.4)); }
+@keyframes aparecer-retro { from { opacity: 0; transform: translateY(8px); } }
+.boton.secundario { background: transparent; color: var(--texto); box-shadow: inset 0 0 0 2px var(--sea-glass); }
+.resultado-cabeza { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 1.2rem; align-items: center; }
+.resultado-yaku { width: 110px; height: auto; filter: drop-shadow(0 0 18px rgba(0, 181, 147, 0.5)); }
+.resultado-titulo { margin: 0.3rem 0 0; font-size: 1.6rem; }
+.resultado-detalle { margin: 0.2rem 0 0; color: var(--sea-glass); font-weight: 700; }
+.resultado-detalle:empty { display: none; }
+.mision-final { border: 2px dashed rgba(238, 246, 244, 0.3); border-radius: 8px; padding: 0.9rem 1rem; }
+.mision-final.cumplida { border-color: var(--sea-glass); background: rgba(0, 181, 147, 0.1); }
+.mision-final p { margin: 0; font-size: 1.05rem; }
+.botones-resultado { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.puntaje { font-size: 3.5rem; font-weight: 700; line-height: 1; color: var(--sea-glass); }
+
+/* ---------- SONIDO ---------- */
+.boton-sonido { position: relative; z-index: 2; font-size: 1rem; padding: 0.8rem 1.5rem; animation: aparecer 0.8s ease 1.6s both; }
+.boton-sonido[hidden] { display: none; }
+.sonido-toggle {
+  position: fixed; z-index: 10;
+  right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 2px solid var(--sea-glass);
+  background: rgba(5, 36, 43, 0.85);
+  color: var(--texto); font-size: 1.3rem; cursor: pointer;
+}
+.sonido-toggle:focus-visible { outline: 3px solid var(--texto); outline-offset: 3px; }
+
+/* ---------- RELÁMPAGOS (fondo de la actividad) ---------- */
+.relampagos { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* ---------- CIERRE ---------- */
+.final-tarjeta {
+  display: flex; flex-direction: column; gap: 1rem; align-items: center; text-align: center;
+  width: min(100%, 38rem); max-width: none;
+  padding: 2.6rem 2.4rem 2.8rem;
+  border: none;
+  border-radius: 0;
+  /* TEXTURA DE ROCA: musgo en las esquinas + tono del proyecto + relieve de piedra */
+  background:
+    radial-gradient(ellipse 45% 35% at 0% 100%, rgba(10, 127, 94, 0.55), transparent 70%),
+    radial-gradient(ellipse 35% 30% at 100% 0%, rgba(10, 127, 94, 0.45), transparent 70%),
+    linear-gradient(rgba(5, 36, 43, 0.55), rgba(5, 36, 43, 0.72)),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='r'><feTurbulence type='fractalNoise' baseFrequency='0.032' numOctaves='5' seed='7'/><feDiffuseLighting lighting-color='%23b9c4c4' surfaceScale='4'><feDistantLight azimuth='225' elevation='50'/></feDiffuseLighting></filter><rect width='100%25' height='100%25' filter='url(%23r)'/></svg>");
+  background-size: auto, auto, auto, 320px 320px;
+  /* borde irregular, como una piedra */
+  clip-path: polygon(3% 4%, 22% 0%, 48% 3%, 71% 0%, 96% 3%, 100% 22%, 98% 50%, 100% 78%, 97% 97%, 74% 100%, 50% 97%, 26% 100%, 2% 96%, 0% 72%, 2% 46%, 0% 20%);
+  box-shadow: none;
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.5));
+}
+.final-tarjeta h2, .final-tarjeta p { text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6); }
+.final-tarjeta h2 { font-size: clamp(1.7rem, 4.5vw, 2.6rem); margin: 0; }
+.final-tarjeta p { font-size: 1.15rem; }
+.final-yaku { width: 120px; height: auto; filter: drop-shadow(0 0 22px rgba(0, 181, 147, 0.55)); }
+.boton-grande {
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1.05rem;
+  padding: 0.95rem 1.8rem;
+  margin-top: 0.4rem;
+}
+.resultado-final:empty { display: none; }
+
+/* ---------- PORTADA ---------- */
+.portada {
+  pointer-events: auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  text-align: center;
+}
+.logo {
+  width: min(90vw, 680px);
+  height: auto;
+  overflow: visible;
+}
+/* letras de YAKU: aparecen una por una desde abajo */
+.logo-titulo path {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: letra 0.7s cubic-bezier(.2, .8, .3, 1.2) both;
+}
+.logo-titulo path:nth-child(1) { animation-delay: 0.1s; }
+.logo-titulo path:nth-child(2) { animation-delay: 0.25s; }
+.logo-titulo path:nth-child(3) { animation-delay: 0.4s; }
+.logo-titulo path:nth-child(4) { animation-delay: 0.55s; }
+/* plantas: crecen desde la base */
+.logo-planta path {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: crecer 0.9s ease-out 0.9s both;
+}
+/* subtítulo: aparece al final */
+.logo-sub {
+  font-family: var(--fuente);
+  font-weight: 700;
+  font-size: 1.2px;
+  animation: aparecer 0.8s ease 1.3s both;
+}
+@keyframes letra {
+  from { opacity: 0; transform: translateY(30%) scale(0.9); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes crecer {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+.baja {
+  color: var(--sea-glass);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  animation: flotar 2s ease-in-out infinite;
+}
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(0.3px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes flotar {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+/* En computador: texto a la izquierda, escenario a la derecha */
+@media (min-width: 900px) {
+  .paso:not(.portada):not(.actividad):not(.final) { padding-left: 5vw; }
+  .capa:not([data-capa="portada"]) { padding-left: 40vw; }
+  .capa[data-capa="mapa"] { padding-left: 48vw; }   /* el mapa más a la derecha para no quedar bajo el letrero */
+  .escena-mapa .mision { width: min(38rem, 40vw); }  /* el letrero nunca invade el mapa */
+  .escena-mapa .tarjeta.letrero { padding: 2.4rem 2.4rem 2.6rem; }
+}
+
+/* En celular la imagen queda detrás del texto: la bajamos un poco */
+@media (max-width: 899px) {
+  /* celular: Yaku arriba y el texto debajo, sin taparlo */
+  .capa[data-capa="yaku"] { align-items: start; padding-top: 3vh; }
+  .yaku-estados { height: 33vh; }
+  .paso[data-capa="yaku"] { align-items: flex-start; padding-top: 40vh; min-height: 110vh; }
+  .capa[data-capa="mapa"] { align-items: start; padding-top: 7vh; }   /* mapa arriba, texto abajo */
+  .capa[data-capa="mapa"] .mapa { width: 82vw; max-height: 44vh; }
+  .escena-mapa { align-items: flex-start; padding-top: 52vh; min-height: 130vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capa, .estado, .yaku-estados, .depto, .depto path { transition: none; }
+  .depto.alerta path, .marcador-alerta .onda, .pista::before, .caso, .retro { animation: none; }
+  .texto-grande .palabra { opacity: 1; transform: none; transition: none; }
+  .yaku-estados[data-estado="4"], .yaku-estados.transformando, .yaku-estados.transformando *, .deco img, .baja, .yaku-estados.cambio, .logo-titulo path, .logo-planta path, .logo-sub { animation: none; }
+}
+
+@media (max-width: 480px) {
+  .tarjeta.letrero { padding: 2.4rem 2.2rem 2.6rem; min-height: 11rem; font-size: 1.1rem; }
+}
